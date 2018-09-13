@@ -23,10 +23,10 @@ def makeMask(image):
     #lower_red = np.array([20,50,50])
     #upper_red = np.array([80,255,255])        
     ## Restrictive bound :
-    lower_red = np.array([35,60,100])
-    upper_red = np.array([80,255,255])
+    lower_green = np.array([35,60,100])
+    upper_green = np.array([80,255,255])
 
-    mask = cv.inRange(imageHsv, lower_red, upper_red)
+    mask = cv.inRange(imageHsv, lower_green, upper_green)
     #utils.showImage("mask", mask)
     #utils.saveImage(file+'-mask', mask)
     

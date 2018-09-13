@@ -70,4 +70,4 @@ def processDatabase(databaseName):
         processImage(image, plantInfoList, filename=file)
 
 if __name__ == '__main__':
-    processDatabase('test-1')
+    processDatabase('base-1')
