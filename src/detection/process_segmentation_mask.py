@@ -8,7 +8,7 @@ Created on Mon Sep 10 07:58:05 2018
 import cv2 as cv
 import numpy as np
 
-import utils
+from . import utils
 
 def segmentationMask(mask):    
     # Find background

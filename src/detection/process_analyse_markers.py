@@ -8,7 +8,7 @@ Created on Mon Sep 10 07:59:18 2018
 import skimage.measure
 import numpy as np
 
-import utils
+from . import utils
 
 def analyseMarkers(markerNumber, markers):
     regionList=[]

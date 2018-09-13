@@ -110,3 +110,9 @@ data/*/tmp/
 
 # other
 other/
+
+# vscode
+.vscode
+
+# credential
+credential.json
