@@ -302,7 +302,6 @@ def factory_reset(package):
     if args_ok:
         return _assemble(kind, {'package': package})
 
-@_send
 def find_home(axis):
     """Send command: find_home.
 
@@ -314,7 +313,6 @@ def find_home(axis):
     if args_ok:
         return _assemble(kind, {'axis': axis})
 
-@_send
 def home(axis):
     """Send command: home.
 
@@ -342,7 +340,6 @@ def install_first_party_farmware():
     kind = 'install_first_party_farmware'
     return _assemble(kind, {})
 
-@_send
 def move_absolute(location, speed, offset):
     """Send command: move_absolute.
 
@@ -363,7 +360,6 @@ def move_absolute(location, speed, offset):
                                 'speed': speed,
                                 'offset': offset})
 
-@_send
 def move_relative(x, y, z, speed):
     """Send command: move_relative.
 
@@ -489,7 +485,6 @@ def sync():
     kind = 'sync'
     return _assemble(kind, {})
 
-@_send
 def take_photo():
     """Send command: take_photo."""
     kind = 'take_photo'
@@ -568,6 +563,7 @@ def zero(axis):
     if args_ok:
         return _assemble(kind, {'axis': axis})
 
+
 def get_current_position(axis='all', _get_bot_state=get_bot_state):
     """Get the current position.
 
@@ -586,6 +582,7 @@ def get_current_position(axis='all', _get_bot_state=get_bot_state):
                 _error('Position `{}` value unknown.'.format(axis))
         else:
             return _get_bot_state()['location_data']['position']
+
 
 def get_pin_value(pin_number, _get_bot_state=get_bot_state):
     """Get a value from a pin.
