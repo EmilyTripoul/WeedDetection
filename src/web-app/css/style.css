@@ -1,0 +1,44 @@
+/******************************************
+*  Author : Emily   
+*  Created On : Sat Sep 15 2018
+*  File : style.css
+*******************************************/
+
+body,html { font-family: Arial; font-size: 11pt; background: #D6A275}
+div.msg { margin: 0.2em; line-height: 1.4em; }
+b { background: #ccc; font-weight: bold; font-size: 10pt;
+    padding: 0.1em 0.2em; }
+b.Python { background: #eee; }
+i { font-family: Courier new; font-size: 10pt; border: #eee 1px solid;
+    padding: 0.1em 0.2em; }
+
+    .ui-menu {
+        width: 200px;
+        font-size: 12px;
+        min-height: 22px; /* définit la hauteur minimale du menu (dépendante de la valeur de font-size) */
+        }
+        ul.horizontal-menu {
+        width: 100%; /* définit la largeur totale du menu */
+        font-size: 32px;
+        min-height: 42px;
+        }
+        ul.horizontal-menu>li {
+        width: 200px; /* définit la largeur des items de niveau 1 */
+        float: left; /* définit le positionnement des items de niveau 1 */
+        }
+
+#farm-map {
+    width: 100%;
+}
+.box {
+    margin-top: 5px;
+}
+.box-title {
+    background-color: rgb(85, 51, 22);
+    padding: 5px;
+    color: white;
+}
+.box-content {
+    height: 25vh;
+    background-color: rgb(173, 108, 50);
+}
