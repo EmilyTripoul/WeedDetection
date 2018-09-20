@@ -118,6 +118,7 @@ function debugLog(message) {
     } else {
         consoleArea.innerHTML= consoleArea.innerHTML + getTimeString() + message+'\n';
     }
+    consoleArea.scrollTop = consoleArea.scrollHeight;
 };
 
 /*
