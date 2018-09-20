@@ -48,27 +48,38 @@
   </div>
   <div id="farm-map" class="box">
     <div class="box-title ui-corner-top"> Farm map</div>
-    <div class="box-content ui-corner-bottom">  
+    <div class="box-content ui-corner-bottom">
       <canvas id="farm-canvas" width="100" height="100">
-        
+
       </canvas>
     </div>
   </div>
-  <div id="Information" class="box">
+  <div id="Information" class="box" style="display: none;">
     <div class="box-title ui-corner-top"> Information</div>
     <div class="box-content ui-corner-bottom"> </div>
   </div>
-  <div id="farm-map" class="box">
+  <div id="farm-map" class="box" style="display: none;">
     <div class="box-title ui-corner-top"> Information</div>
     <div class="box-content ui-corner-bottom"> </div>
   </div>
   <div id="debug-box" class="box">
     <div class="box-title ui-corner-top"> Debug Info</div>
-    <div class="box-content ui-corner-bottom"> </div>
+    <div class="box-content ui-corner-bottom"> <textarea id="debug-textarea" readonly></textarea></div>
   </div>
 
-  <div id="console"></div>
-  <input type="text" name="date" id="date">
+  <div id="login-modal" class="modal-bg">
+    <div class="modal-content">
+      <div class="box-title ui-corner-top"> Login Info</div>
+      <div id ="login-form" class="box-content ui-corner-bottom">
+        <div id="login-error-message" class="ui-state-error ui-corner-all" style="display: none;">Incorrect login information</div>
+        <label>Email : </label> <input type="text" id="login-input-email" placeholder="email@gmail.com"></input>
+        <label>Password : </label> <input type="text" id="login-input-password" placeholder="password"></input>
+        <label>Server : </label> <input type="text" id="login-input-server"></input>
+        <div id="login-button"><button type="button" id="login-button-confirm"> Confirm </button> <div id="login-validation-img" class="icon"></div> </div>
+      </div>
+    </div>
+  </div>
+  
 </body>
 
 </html>

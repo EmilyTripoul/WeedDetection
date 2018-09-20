@@ -14,6 +14,8 @@ import base64
 import platform
 import sys
 import threading
+import json
+from functools import wraps
 
 # HTML code. Browser will navigate to a Data uri created
 # from this html code.
@@ -29,7 +31,7 @@ def main():
     browser = cef.CreateBrowserSync(url=os.path.dirname(os.path.realpath(__file__))+'/web-app/index.html',
                                     window_title="WeedDetectionBot")
     #set_client_handlers(browser)
-    #set_javascript_bindings(browser)
+    set_javascript_bindings(browser)
     cef.MessageLoop()
     cef.Shutdown()
 
@@ -44,6 +46,48 @@ def check_versions():
            arch=platform.architecture()[0]))
     assert cef.__version__ >= "57.0", "CEF Python v57.0+ required to run this"
 
+_py_expose_list={}
+def py_expose(function):
+
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        'Expose the function for the browser'
+        jsCallback=None
+        try:
+            jsCallback = kwargs.pop('jsCallback')
+        except KeyError:
+            if len(args)>0:
+                jsCallback=args[-1]
+
+        if jsCallback!=None:
+            newArgs=args[0:-1]
+            command = jsCallback.Call(function(*newArgs, **kwargs))
+        else:            
+            command = function(*args, **kwargs)
+        
+        if type(command)==object:
+            return json.dumps(command)
+        else:
+            return command
+        
+    if function.__name__ not in _py_expose_list:
+        _py_expose_list[function.__name__] = wrapper
+    return wrapper
+
+@py_expose
+def py_getLoginInfo():
+    try:
+        with open('./data/credential.json') as file:
+            data=json.loads(file.read())
+    except FileNotFoundError:
+        data={}
+    return data
+
+@py_expose
+def py_validateLogin(data):
+    print(data)
+    return True
+        
 
 def html_to_data_uri(html, js_callback=None):
     # This function is called in two ways:
@@ -77,15 +121,14 @@ def set_client_handlers(browser):
     for handler in client_handlers:
         browser.SetClientHandler(handler)
 
-
 def set_javascript_bindings(browser):
     external = External(browser)
     bindings = cef.JavascriptBindings(
             bindToFrames=False, bindToPopups=False)
-    bindings.SetProperty("python_property", "This property was set in Python")
-    bindings.SetProperty("cefpython_version", cef.GetVersion())
-    bindings.SetFunction("html_to_data_uri", html_to_data_uri)
-    bindings.SetObject("external", external)
+    bindings.SetProperty("py_cefpython_version", cef.GetVersion())
+    for functionName in _py_expose_list:
+        bindings.SetFunction(functionName, _py_expose_list[functionName])
+    #bindings.SetObject("external", external)
     browser.SetJavascriptBindings(bindings)
 
 
