@@ -1,9 +1,7 @@
-#include "SimulatorProgram.h"
-
 
 int inputControlPin = 4; // Send High to heat the water
 int outputSwitchPin = 7; // Send High to open the switch
-int outputControlPin = 8; // Send High when the water is hot
+int outputControlPin = LED_BUILTIN; // Send High when the water is hot
 int inputResistanceAnalog = A0; // Send High to heat the water
 
 #define COMMAND_MODE_PIN 1
@@ -93,24 +91,23 @@ void resetCommand() {
 }
 
 void readCommand() {
-  while (Serial.available()>0) {
+  while (Serial.available() >0) {
 		char data = Serial.read();
-    if(commandLength<COMMAND_MAX_LENGTH) {
+    if(commandLength<COMMAND_MAX_LENGTH-1 && data != '\n') {
       command[commandLength]=data;
       commandLength++;
     }
-  }
+  }  
+  
   if(commandLength<COMMAND_MAX_LENGTH) {
     command[commandLength]='\0';
-    commandLength++;
   }
 }
 
 
 void setup() { 
   
-  Serial.begin(9600);                           
-  inString.reserve(10);
+  Serial.begin(9600);     
 
   pinMode(inputControlPin, INPUT);  
   pinMode(inputResistanceAnalog, INPUT);  
@@ -125,14 +122,14 @@ void setup() {
 
  }
 
-void displayValue(int value) {
+void displayValue(int opcode, int value) {
   char msg[255];
-  sprintf(msg, "%d", value);
-  Serialprint(msg);   
+  sprintf(msg, "R%d V%d", opcode, value);
+  Serial.println(msg);   
 }
 
 float getTemperature() {
-  int resistance = analogRead(inputResistanceAnalog);
+  int resistance = 1023-analogRead(inputResistanceAnalog);
   return mapResitanceToTemp(resistance);  
 }
  
@@ -169,7 +166,7 @@ int parseSegment(int startingPosition, char* currentParsingType, int* currentPar
   }
 
   for(int i=currentParsingPosition; i<commandLength;i++) {
-    if(command[i]==' ' || command[i]='\0') {
+    if(command[i]==' ' || command[i]=='\0') {
       break;
     }
     opcode=10*opcode+(command[i]-'0');
@@ -186,6 +183,7 @@ void loop() {
   #if COMMAND_MODE == COMMAND_MODE_SERIAL
     resetCommand();
     readCommand();
+    
     if(commandLength>0) {
       int currentParsingPosition=0;
       char currentParsingType='\0';
@@ -193,17 +191,19 @@ void loop() {
 
       currentParsingPosition=parseSegment(currentParsingPosition, &currentParsingType, &currentParsingOpcode);
       if(currentParsingType=='F') {
-        if(currentParsingOpcode=85) {          
+        if(currentParsingOpcode==85) {          
           currentParsingPosition=parseSegment(currentParsingPosition, &currentParsingType, &currentParsingOpcode);
           if(currentParsingType=='V') {
             inputControlState=currentParsingOpcode;
           }
-        } else if (currentParsingOpcode=86) {
-          if(checkTemperatureResult>=0) {
-            Serial.print("R42 V1");
-          } else {
-            Serial.print("R42 V0");
-          }
+        } else if (currentParsingOpcode==86) {
+          displayValue(42, checkTemperatureResult>=0);
+        } else if (currentParsingOpcode==87) {
+          displayValue(43, int(getTemperature()));
+        }else if (currentParsingOpcode==88) {
+          displayValue(44, analogRead(inputResistanceAnalog));
+        }else if (currentParsingOpcode==89) {
+          displayValue(45, (inputControlState == HIGH) && (checkTemperatureResult<=0));
         }
       }
     }
@@ -215,24 +215,20 @@ void loop() {
 
   
 
-  // Handle Ready for spray
+  // Handle Ready
   if(checkTemperatureResult>=0) {
     digitalWrite(outputControlPin, HIGH);
   } else {
     digitalWrite(outputControlPin, LOW);    
   }
 
-  // Handle Control  
-  if(inputControlState == HIGH) {
-    if (checkTemperatureResult<=0) {
-      digitalWrite(outputSwitchPin, HIGH);       
-    } else {
-      digitalWrite(outputSwitchPin, LOW);              
-    }
+  // Handle Swich  
+  if(inputControlState == HIGH && checkTemperatureResult<=0) {
+    digitalWrite(outputSwitchPin, HIGH);       
   } else {
     digitalWrite(outputSwitchPin, LOW);        
   }        
 
-
+  delay(100);
 }
   
