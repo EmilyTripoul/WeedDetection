@@ -25,7 +25,7 @@ RestistanceTemp resistanceMap[RESISTANCE_MAP_SIZE];
 void setResistanceMap() {
   resistanceMap[0].resistance=900;
   resistanceMap[0].temp=24;
-  resistanceMap[1].resistance=961;
+  resistanceMap[1].resistance=861;
   resistanceMap[1].temp=30;
   resistanceMap[2].resistance=820;
   resistanceMap[2].temp=40;
@@ -110,21 +110,21 @@ void loop() {
   int checkTemperatureResult = checkTemperature();
   // Handle Ready for spray
   if(checkTemperatureResult>=0) {
-    DigitalWrite(outputControlPin, HIGH);
+    digitalWrite(outputControlPin, HIGH);
   } else {
-    DigitalWrite(outputControlPin, LOW);    
+    digitalWrite(outputControlPin, LOW);    
   }
 
   // Handle Control  
   int controlPinStatus = DigitalRead(inputControlPin);  
   if(controlPinStatus == HIGH) {
     if (checkTemperatureResult<=0) {
-      DigitalWrite(outputSwitchPin, HIGH);       
+      digitalWrite(outputSwitchPin, HIGH);       
     } else {
-      DigitalWrite(outputSwitchPin, LOW);              
+      digitalWrite(outputSwitchPin, LOW);              
     }
   } else {
-    DigitalWrite(outputSwitchPin, LOW);        
+    digitalWrite(outputSwitchPin, LOW);        
   }        
 
 }
