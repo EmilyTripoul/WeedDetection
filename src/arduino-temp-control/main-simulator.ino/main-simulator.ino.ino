@@ -15,7 +15,7 @@ int commandLength;
 int inputControlState = 0;
 
 #define TEMPERATURE_HOT_MIN 75
-#define TEMPERATURE_HOT_MAX 85
+#define TEMPERATURE_HOT_MAX 90
 
 class RestistanceTemp {
   public:
@@ -118,8 +118,6 @@ void setup() {
   setResistanceMap();
 
   resetCommand();
-
-
  }
 
 void displayValue(int opcode, int value) {
@@ -203,7 +201,9 @@ void loop() {
         }else if (currentParsingOpcode==88) {
           displayValue(44, analogRead(inputResistanceAnalog));
         }else if (currentParsingOpcode==89) {
-          displayValue(45, (inputControlState == HIGH) && (checkTemperatureResult<=0));
+          displayValue(45, (inputControlState == 1) && (checkTemperatureResult<=0));
+        }else if (currentParsingOpcode==90) {
+          displayValue(46, inputControlState );
         }
       }
     }
@@ -223,7 +223,7 @@ void loop() {
   }
 
   // Handle Swich  
-  if(inputControlState == HIGH && checkTemperatureResult<=0) {
+  if(inputControlState == 1 && checkTemperatureResult<=0) {
     digitalWrite(outputSwitchPin, HIGH);       
   } else {
     digitalWrite(outputSwitchPin, LOW);        

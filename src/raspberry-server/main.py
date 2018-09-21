@@ -13,15 +13,6 @@ import socketserver
 from datetime import datetime
 import os
 
-def FarmbotState(object):
-    def __init__():
-        pass
-    
-    def getPinValue(self, pin):
-        pass
-    
-    def _sendArduino(self, pin):
-        pass
 
 def apiHandleCeleryScript(httpHandler):
     pass
