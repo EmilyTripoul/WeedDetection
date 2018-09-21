@@ -6,6 +6,16 @@ int outputSwitchPin = 7; // Send High to open the switch
 int outputControlPin = 8; // Send High when the water is hot
 int inputResistanceAnalog = A0; // Send High to heat the water
 
+#define COMMAND_MODE_PIN (1<<0)
+#define COMMAND_MODE_SERIAL (1<<1)
+#define COMMAND_MODE (COMMAND_MODE_PIN | COMMAND_MODE_SERIAL)
+
+#define COMMAND_MAX_LENGTH 255
+char command[COMMAND_MAX_LENGTH];
+int commandLength;
+
+int outputControlHeat = 0;
+
 #define TEMPERATURE_HOT_MIN 75
 #define TEMPERATURE_HOT_MAX 85
 
@@ -75,6 +85,28 @@ float mapResitanceToTemp(int resistance) {
   }  
 }
 
+void resetCommand() {
+  for(int i =0;i<COMMAND_MAX_LENGTH;i++) {
+    command[i]=0; //Could use memset
+  }
+  commandLength=0;
+}
+
+void readCommand() {
+  while (Serial.available()>0) {
+		char data = Serial.read();
+    if(commandLength<COMMAND_MAX_LENGTH) {
+      command[commandLength]=data;
+      commandLength++;
+    }
+  }
+  if(commandLength<COMMAND_MAX_LENGTH) {
+    command[commandLength]='\0';
+    commandLength++;
+  }
+}
+
+
 void setup() { 
   
   Serial.begin(9600);                           
@@ -87,6 +119,10 @@ void setup() {
   pinMode(outputControlPin, OUTPUT);  
 
   setResistanceMap();
+
+  resetCommand();
+
+
  }
 
 void displayValue(int value) {
@@ -106,6 +142,15 @@ int checkTemperature() {
             (temperature > TEMPERATURE_HOT_MAX) ? 1 : 0);  
 }
  
+ #define COMMAND_SET_HEAT 85
+ #define COMMAND_GET_HEAT 85
+ 
+int interpretCommand() {
+  if(commandLength==0) {
+    return;
+  }
+}
+
 void loop() { 
   int checkTemperatureResult = checkTemperature();
   // Handle Ready for spray
@@ -114,6 +159,11 @@ void loop() {
   } else {
     digitalWrite(outputControlPin, LOW);    
   }
+
+  // Serial communication 
+  resetCommand();
+  readCommand();
+
 
   // Handle Control  
   int controlPinStatus = DigitalRead(inputControlPin);  
@@ -126,6 +176,7 @@ void loop() {
   } else {
     digitalWrite(outputSwitchPin, LOW);        
   }        
+
 
 }
   
