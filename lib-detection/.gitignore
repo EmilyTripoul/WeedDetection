@@ -1,0 +1,6 @@
+
+# data
+data/base-*
+data/*/output/
+data/*/tmp/
+

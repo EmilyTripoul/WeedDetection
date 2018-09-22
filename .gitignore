@@ -103,11 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# data
-data/base-*
-data/*/output/
-data/*/tmp/
-
 # other
 other/
 
