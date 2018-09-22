@@ -7,15 +7,13 @@ Created on Thu Sep 13 2018
 
 import requests
 import json
-import utils
 
-def getToken(credentialFile):
-    with open(credentialFile) as file:
-        credential=json.loads(file.read())
-
-    # Get your FarmBot Web App token.
+def getToken(serverBaseUrl, credential):
     headers = {'content-type': 'application/json'}
     user = {'user': {'email': credential['email'], 'password': credential['password']}}
-    response = requests.post('https://my.farmbot.io/api/tokens',
+    response = requests.post(serverBaseUrl+'/api/tokens',
                             headers=headers, json=user)
     return response.json()
+
+if __name__ =="__main__":
+    getToken('http://127.0.0.1:3333', {'email':'test@email.com', 'password':'abc'})
