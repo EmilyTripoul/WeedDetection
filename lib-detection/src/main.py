@@ -24,7 +24,7 @@ from math import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-from detection import utils, process_build_mask, process_segmentation_mask, process_analyse_markers
+from . import utils, process_build_mask, process_segmentation_mask, process_analyse_markers
 
 def processImage(image, plantInfoList, filename='', showImage=True, outputImage=True):    
     mask=process_build_mask.makeMask(image)
@@ -58,6 +58,8 @@ def processImage(image, plantInfoList, filename='', showImage=True, outputImage=
             ax.add_artist(circle)
         if outputImage:
             utils.saveImage(filename+'-combinedMask', combinedMask, True)
+    
+    return plantList, weedList
     
 def processDatabase(databaseName):
     dataInputFolder, dataOutputFolder = utils.openDatabase(databaseName)
