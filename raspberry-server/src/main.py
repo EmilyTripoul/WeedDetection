@@ -15,15 +15,6 @@ import os
 import logging
 import io
 
-def FarmbotState(object):
-    def __init__():
-        pass
-    
-    def getPinValue(self, pin):
-        pass
-    
-    def _sendArduino(self, pin):
-        pass
 
 def apiHandleCeleryScript(httpHandler):
     pass
