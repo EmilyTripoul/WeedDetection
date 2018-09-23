@@ -14,8 +14,8 @@ int commandLength;
 
 int inputControlState = 0;
 
-#define TEMPERATURE_HOT_MIN 75
-#define TEMPERATURE_HOT_MAX 90
+#define TEMPERATURE_HOT_MIN 70
+#define TEMPERATURE_HOT_MAX 85
 
 class RestistanceTemp {
   public:
