@@ -202,8 +202,6 @@ void loop() {
           displayValue(43, int(getTemperature()));
         }else if (currentParsingOpcode==88) {
           displayValue(44, analogRead(inputResistanceAnalog));
-        }else if (currentParsingOpcode==89) {
-          displayValue(45, (inputControlState == HIGH) && (checkTemperatureResult<=0));
         }
       }
     }
