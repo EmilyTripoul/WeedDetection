@@ -1,0 +1,85 @@
+<!-- ******************************************
+*  Author : Emily   
+*  Created On : Sat Sep 15 2018
+*  File : index.html
+******************************************* -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="ext/jquery-ui-1.12.1.custom/jquery-ui.min.css">
+  <script src="ext/jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+  <script src="ext/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="js/main.js"></script>
+</head>
+
+<body>
+  <div id="top-menu">
+    <ul id="top-menu-content" class="horizontal-menu">
+      <li>
+        <div>Item 1</div>
+      </li>
+      <li>
+        <div>Item 2</div>
+      </li>
+      <li>
+        <div>Farmbot</div>
+        <ul>
+          <li>
+            <div>Connect</div>
+          </li>
+          <li>
+            <div>Disconnect</div>
+          </li>
+          <li>
+            <div>Item 3-3</div>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <div>Item 4</div>
+      </li>
+      <li>
+        <div>Exit</div>
+      </li>
+    </ul>
+  </div>
+  <div id="farm-map" class="box">
+    <div class="box-title ui-corner-top"> Farm map</div>
+    <div class="box-content ui-corner-bottom">
+      <canvas id="farm-canvas" width="100" height="100">
+
+      </canvas>
+    </div>
+  </div>
+  <div id="Information" class="box" style="display: none;">
+    <div class="box-title ui-corner-top"> Information</div>
+    <div class="box-content ui-corner-bottom"> </div>
+  </div>
+  <div id="farm-map" class="box" style="display: none;">
+    <div class="box-title ui-corner-top"> Information</div>
+    <div class="box-content ui-corner-bottom"> </div>
+  </div>
+  <div id="debug-box" class="box">
+    <div class="box-title ui-corner-top"> Debug Info</div>
+    <div class="box-content ui-corner-bottom"> <textarea id="debug-textarea" readonly></textarea></div>
+  </div>
+
+  <div id="login-modal" class="modal-bg">
+    <div class="modal-content">
+      <div class="box-title ui-corner-top"> Login Info</div>
+      <div id ="login-form" class="box-content ui-corner-bottom">
+        <div id="login-error-message" class="ui-state-error ui-corner-all" style="display: none;">Incorrect login information</div>
+        <label>Email : </label> <input type="text" id="login-input-email" placeholder="email@gmail.com"></input>
+        <label>Password : </label> <input type="text" id="login-input-password" placeholder="password"></input>
+        <label>Server : </label> <input type="text" id="login-input-server"></input>
+        <div id="login-button"><button type="button" id="login-button-confirm"> Confirm </button> <div id="login-validation-img" class="icon"></div> </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+</html>
