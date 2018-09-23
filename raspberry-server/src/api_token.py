@@ -40,7 +40,6 @@ def isTokenValid(token):
 def apiCheckToken(httpHandler):
     requestHeader = httpHandler.headers.get('Authorization')
     token=requestHeader.split(' ')[1:][0]
-    print(token)
     if not isTokenValid(token):
         httpHandler.send_error(https.HTTPStatus.UNAUTHORIZED, "Unauthorized Token")
         return False

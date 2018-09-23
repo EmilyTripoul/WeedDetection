@@ -12,6 +12,10 @@ import json
 import api_token
 
 
+def parseCeleryScript(contentDict):
+
+    return None
+
 def apiHandleCeleryScript(httpHandler):
     requestContent = httpHandler.getRequestContent()
     logging.getLogger('celery_scripts').info('Celery script request from %s'%(httpHandler.address_string()))
@@ -20,8 +24,10 @@ def apiHandleCeleryScript(httpHandler):
         return None
     if api_token.apiCheckToken(httpHandler)== False:
         return None
+    logging.getLogger('celery_scripts').info('Celery script request from %s : %s'%(httpHandler.address_string(), requestContent))
 
     contentDict=json.loads(requestContent)
+    
+    response=parseCeleryScript(contentDict)
 
-    print(contentDict)
     httpHandler.sendResponse()
