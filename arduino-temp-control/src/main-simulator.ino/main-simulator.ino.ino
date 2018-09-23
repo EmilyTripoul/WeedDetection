@@ -14,7 +14,7 @@ int commandLength;
 
 int inputControlState = 0;
 
-#define TEMPERATURE_HOT_MIN 75
+#define TEMPERATURE_HOT_MIN 70
 #define TEMPERATURE_HOT_MAX 85
 
 class RestistanceTemp {
@@ -221,7 +221,7 @@ void loop() {
   }
 
   // Handle Swich  
-  if(inputControlState == HIGH && checkTemperatureResult<=0) {
+  if(inputControlState == 1 && checkTemperatureResult<=0) {
     digitalWrite(outputSwitchPin, HIGH);       
   } else {
     digitalWrite(outputSwitchPin, LOW);        
