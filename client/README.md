@@ -1,5 +1,6 @@
 # WeedBotClient
 
+![GUI](img/GUI.PNG "GUI")
 The weed bot client controls the farmbot. 
 
 The user interface uses a chrominium application through cefpython3. 

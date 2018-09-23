@@ -16,70 +16,70 @@
 </head>
 
 <body>
-  <div id="top-menu">
-    <ul id="top-menu-content" class="horizontal-menu">
-      <li>
-        <div>Item 1</div>
+  <header class="main-head"><div class="title">Weed Detection Bot</div></header>
+
+  <aside class="side">
+    <ul id="left-menu-content">
+      <li >
+        <a class="current">Information</a>
       </li>
       <li>
-        <div>Item 2</div>
+        <a>Calibration</a>
       </li>
       <li>
-        <div>Farmbot</div>
-        <ul>
-          <li>
-            <div>Connect</div>
-          </li>
-          <li>
-            <div>Disconnect</div>
-          </li>
-          <li>
-            <div>Item 3-3</div>
-          </li>
-        </ul>
+        <a>Sweep</a>
       </li>
       <li>
-        <div>Item 4</div>
+        <a>Weed Elimination</a>
       </li>
       <li>
-        <div>Exit</div>
+        <a>Direct command</a>
+      </li>
+      <li>
+        <a>Exit</a>
       </li>
     </ul>
-  </div>
-  <div id="farm-map" class="box">
-    <div class="box-title ui-corner-top"> Farm map</div>
-    <div class="box-content ui-corner-bottom">
-      <canvas id="farm-canvas" width="100" height="100">
+  </aside>
 
-      </canvas>
-    </div>
-  </div>
-  <div id="Information" class="box" style="display: none;">
-    <div class="box-title ui-corner-top"> Information</div>
-    <div class="box-content ui-corner-bottom"> </div>
-  </div>
-  <div id="farm-map" class="box" style="display: none;">
-    <div class="box-title ui-corner-top"> Information</div>
-    <div class="box-content ui-corner-bottom"> </div>
-  </div>
-  <div id="debug-box" class="box">
-    <div class="box-title ui-corner-top"> Debug Info</div>
-    <div class="box-content ui-corner-bottom"> <textarea id="debug-textarea" readonly></textarea></div>
-  </div>
+  <article class="content">
+    <div id="farm-map" class="box">
+      <div class="box-title ui-corner-top"> Farm map</div>
+      <div class="box-content ui-corner-bottom">
+        <canvas id="farm-canvas" width="100" height="100">
 
-  <div id="login-modal" class="modal-bg">
-    <div class="modal-content">
-      <div class="box-title ui-corner-top"> Login Info</div>
-      <div id ="login-form" class="box-content ui-corner-bottom">
-        <div id="login-error-message" class="ui-state-error ui-corner-all" style="display: none;">Incorrect login information</div>
-        <label>Email : </label> <input type="text" id="login-input-email" placeholder="email@gmail.com"></input>
-        <label>Password : </label> <input type="text" id="login-input-password" placeholder="password"></input>
-        <label>Server : </label> <input type="text" id="login-input-server"></input>
-        <div id="login-button"><button type="button" id="login-button-confirm"> Confirm </button> <div id="login-validation-img" class="icon"></div> </div>
+        </canvas>
       </div>
     </div>
-  </div>
-  
+    <div id="Information" class="box" >
+      <div class="box-title "> Information</div>
+      <div class="box-content "> Loading... </div>
+    </div>
+    <div id="farm-map" class="box" style="display: none;">
+      <div class="box-title "> Information</div>
+      <div class="box-content "> </div>
+    </div>
+    <div id="debug-box" class="box">
+      <div class="box-title "> Debug Info</div>
+      <div class="box-content "> <textarea id="debug-textarea" readonly></textarea></div>
+    </div>
+
+    <div id="login-modal" class="modal-bg">
+      <div class="modal-content">
+        <div class="box-title ui-corner-top"> Login Info</div>
+        <div id="login-form" class="box-content ui-corner-bottom">
+          <div id="login-error-message" class="ui-state-error ui-corner-all" style="display: none;">Incorrect login
+            information</div>
+          <label>Email : </label> <input type="text" id="login-input-email" placeholder="email@gmail.com"></input>
+          <label>Password : </label> <input type="text" id="login-input-password" placeholder="password"></input>
+          <label>Server : </label> <input type="text" id="login-input-server"></input>
+          <div id="login-button"><button type="button" id="login-button-confirm"> Confirm </button>
+            <div id="login-validation-img" class="icon"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
 </body>
 
 </html>

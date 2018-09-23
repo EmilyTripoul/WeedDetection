@@ -3,31 +3,61 @@
 *  Created On : Sat Sep 15 2018
 *  File : style.css
 *******************************************/
-
-body,
-html {
-  font-family: Arial;
+html, body {
+  width: 100%;
+  height: 100%;
+}
+body{
+  font-family: system-ui, sans-serif;
   font-size: 11pt;
   background: #c0c0c0;
+  
+  margin: 0;
+  display: grid;
+  grid-template-rows: 40px auto;
+  grid-template-columns: 15vh auto;
+  grid-template-areas: 
+    "header  header"
+    "sidebar content";
+    min-height: 100%;
 }
-div.msg {
-  margin: 0.2em;
-  line-height: 1.4em;
+.main-head {
+  grid-area: header;
+  background-color: aliceblue;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .16);
+  /* stretch from first grid line to last grid line */
+  grid-column: 1/-1;
 }
-b {
-  background: #ccc;
-  font-weight: bold;
-  font-size: 10pt;
-  padding: 0.1em 0.2em;
+.main-head > .title {
+  padding : 5px;
+  font-size: 18pt;
+  text-align: center;
 }
-b.Python {
-  background: #eee;
+.content {
+  grid-area: content;
 }
-i {
-  font-family: Courier new;
-  font-size: 10pt;
-  border: #eee 1px solid;
-  padding: 0.1em 0.2em;
+.side {
+  grid-area: sidebar;
+  background-color: #213e48;
+
+}
+#left-menu-content {
+  
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#left-menu-content li a {
+  min-height: 42px;
+  color:white;
+  
+  display: block;
+  font-size: 13pt;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+#left-menu-content li a.current {
+  background: black;
 }
 
 .ui-menu {
