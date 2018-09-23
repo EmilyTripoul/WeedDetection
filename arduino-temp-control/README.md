@@ -18,6 +18,7 @@ We use G-Code to control the arduino.
 ### Code sent to the arduino
 
 The following code are implemented :
+
 | G Code | OpCode | Parameters | Result  |
 | ------ |:-------| :- | :-----|
 | F      | 85     | V | Change the value of the control pin (0 = stop heating/1=start heating)  |
@@ -28,6 +29,7 @@ The following code are implemented :
 ### Code received from the arduino
 
 The following code are implemented :
+
 | G Code | OpCode | Parameters | Result  |
 | ------ |:-------| :- | :-----|
 | R      | 42     | V | Check if the water is hot (>70°C) : 1 if it's hot / 0 if it's under 70°C |
