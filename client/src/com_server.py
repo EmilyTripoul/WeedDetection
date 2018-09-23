@@ -13,7 +13,10 @@ def getToken(serverBaseUrl, credential):
     user = {'user': {'email': credential['email'], 'password': credential['password']}}
     response = requests.post(serverBaseUrl+'/api/tokens',
                             headers=headers, json=user)
-    return response.json()
+                            
+    if response.status_code==200:
+        return response.json()
+    return None
 
 if __name__ =="__main__":
     getToken('http://127.0.0.1:3333', {'email':'test@email.com', 'password':'abc'})

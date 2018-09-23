@@ -7,16 +7,24 @@ import os
 import sys
 from functools import wraps
 import requests
+import logging
 
 ALLOWED_AXIS_VALUES = ['x', 'y', 'z', 'all']
 ALLOWED_MESSAGE_TYPES = [
     'success', 'busy', 'warn', 'error', 'info', 'fun', 'debug']
 ALLOWED_MESSAGE_CHANNELS = ['ticker', 'toast', 'email', 'espeak']
 ALLOWED_PACKAGES = ['farmbot_os', 'arduino_firmware', 'farmware']
+_FARMWARE_URL='http://127.0.0.1'
+_FARMWARE_TOKEN=''
 
-def _on_error():
-    sys.exit(1)
+def _on_error():    
     return
+
+def initCommunication(serverUrl, token):
+    global _FARMWARE_URL, _FARMWARE_TOKEN
+    _FARMWARE_URL=serverUrl
+    _FARMWARE_TOKEN=token
+
 
 def _check_celery_script(command):
     try:
@@ -39,13 +47,13 @@ def rpc_wrapper(command, rpc_id=''):
 
 def _device_request(method, endpoint, payload=None):
     'Make a request to the device Farmware API.'
-    try:
-        base_url = os.environ['FARMWARE_URL']
-        token = os.environ['FARMWARE_TOKEN']
-    except KeyError:
-        return
+    if _FARMWARE_TOKEN=='':
+        return 
 
-    url = base_url + 'api/v1/' + endpoint
+    base_url = _FARMWARE_URL
+    token = _FARMWARE_TOKEN
+
+    url = base_url + '/api/' + endpoint
     request_kwargs = {}
     request_kwargs['headers'] = {
         'Authorization': 'Bearer ' + token,
@@ -54,8 +62,8 @@ def _device_request(method, endpoint, payload=None):
         request_kwargs['json'] = payload
     response = requests.request(method, url, **request_kwargs)
     if response.status_code != 200:
-        log('Invalid {} request `{}` ({})'.format(
-            endpoint, payload or '', response.status_code), 'error')
+        logging.getLogger('com_farmbot').error('Invalid {} request `{}` ({})'.format(
+            endpoint, payload or '', response.status_code))
         _on_error()
     return response
 
@@ -113,7 +121,7 @@ def send_celery_script(command):
     kind, args, body = _check_celery_script(command)
     response = _post('celery_script', command)
     if response is None:
-        print(COLOR.colorize_celery_script(kind, args, body))
+        print(kind, args, body)
     return command
 
 def log(message, message_type='info', channels=None):
@@ -126,7 +134,9 @@ def log(message, message_type='info', channels=None):
         channels (list, optional): Any of ALLOWED_MESSAGE_CHANNELS.
             Defaults to None.
     """
-    return send_message(message, message_type, channels)
+    logging.getLogger('com_farmbot').info(message)
+    #return send_message(message, message_type, channels)
+    return None
 
 def _assemble(kind, args, body=None):
     'Assemble a celery script command.'
@@ -136,21 +146,13 @@ def _assemble(kind, args, body=None):
         return {'kind': kind, 'args': args, 'body': body}
 
 def _error(error_text):
-    try:
-        os.environ['FARMWARE_URL']
-    except KeyError:
-        print(COLOR.error(error_text))
-    else:
-        log(error_text, 'error')
+    logging.getLogger('com_farmbot').error(error_text)
+    #log(error_text, 'error')
 
 def _cs_error(kind, arg):
-    try:
-        os.environ['FARMWARE_URL']
-    except KeyError:
-        print(COLOR.error('Invalid input `{arg}` in `{kind}`'.format(
-            arg=arg, kind=kind)))
-    else:
-        log('Invalid arg `{}` for `{}`'.format(arg, kind), 'error')
+    logging.getLogger('com_farmbot').error('Invalid input `{arg}` in `{kind}`'.format(
+        arg=arg, kind=kind))
+    #log('Invalid arg `{}` for `{}`'.format(arg, kind), 'error')
 
 def _check_arg(kind, arg, accepted):
     'Error and exit for invalid command arguments.'
