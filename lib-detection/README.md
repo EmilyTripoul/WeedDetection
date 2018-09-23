@@ -40,3 +40,5 @@ The input are an image, and a plant information dictionary : Example from conver
     }
 ]
 ```
+
+The output is a tuple of [skimage.regionprops](http://scikit-image.org/docs/dev/api/skimage.measure.html#regionprops) arrays that can be further processed. The first one is associated to the plants, the second one to the weeds.
