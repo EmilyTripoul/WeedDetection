@@ -2,11 +2,7 @@
 
   //#define RAMPS_V14
   //#define FARMDUINO_V10
-<<<<<<< HEAD
-  #define FARMDUINO_V14
-=======
   #define FARMDUINO_V10
->>>>>>> feature/raspberry-server
 
 #else
 
