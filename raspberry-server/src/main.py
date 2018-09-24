@@ -12,13 +12,9 @@ from datetime import datetime
 import os
 import logging
 
-<<<<<<< HEAD
 import http_server
 import api_token
 import api_celery_scripts
-=======
->>>>>>> fc3a13b1e5b9bcbd3ab808c67d678411f7f9ed22
-
 
 def apiHandleBotState(httpHandler):
     pass
